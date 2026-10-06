@@ -3,7 +3,12 @@
   "private": true,
   "workspaces": ["apps/*"],
   "scripts": {
-    "dev": "npm -w apps/web run dev",
-    "build": "npm -w apps/web run build"
+    "dev": "npm run db:up && npm -w apps/web run dev",
+    "build": "npm -w apps/web run build",
+    "db:up": "docker compose up -d --build --wait",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs -f",
+    "db:reset": "docker compose down -v && npm run db:up",
+    "db:psql": "docker compose exec postgres psql -U postgres -d postgres"
   }
 }
